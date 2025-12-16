@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'login_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await dotenv.load(fileName: ".env");
-
-  await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
-  );
-
+  try {
+    const String supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+    const String supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
+    await Supabase.initialize(url: supabaseUrl, anonKey: supabaseAnonKey);
+    print('Supabase initialized');
+  } catch (e) {
+    print('Initialization error: $e');
+  }
   runApp(const MyApp());
 }
 

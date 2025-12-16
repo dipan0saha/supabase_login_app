@@ -35,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
         context,
       ).showSnackBar(SnackBar(content: Text(error.message)));
     } catch (error) {
+      print('Login error: $error');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Unexpected error occurred')),
       );
